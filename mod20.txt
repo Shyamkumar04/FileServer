@@ -1,0 +1,269 @@
+Rat In A Maze Problem
+N = 4
+def printSolution( sol ):
+    for i in sol:
+        for j in i:
+            print(str(j) + " ", end ="")
+        print("")
+        
+def isSafe( maze, x, y ):
+    if x >= 0 and x < N and y >= 0 and y < N and maze[x][y] == 1:
+        return True
+    return False
+    
+def solveMaze( maze ):
+    sol = [ [ 0 for j in range(4) ] for i in range(4) ]
+    if solveMazeUtil(maze, 0, 0, sol) == False:
+        print("Solution doesn't exist");
+        return False
+    printSolution(sol)
+    return True
+    
+def solveMazeUtil(maze, x, y, sol):
+    if x == N - 1 and y == N - 1:
+        sol[x][y] = 1
+        return True
+    if isSafe(maze, x, y) == True:
+        sol[x][y] = 1
+        if solveMazeUtil(maze, x + 1, y, sol) == True:
+            return True
+        if solveMazeUtil(maze, x, y + 1, sol) == True:
+            return True
+        sol[x][y] = 0
+        return False
+        
+maze = [ [1, 0, 0, 0],
+         [1, 1, 0, 1],
+         [0, 1, 0, 0],
+         [1, 1, 1, 1] ]
+solveMaze(maze)
+
+##
+You are given an integer N. For a given N x N chessboard, find a way to place 'N' queens such that no queen can attack any other queen on the chessboard.
+global N
+N = int(input())
+ 
+def printSolution(board):
+    for i in range(N):
+        for j in range(N):
+            print(board[i][j], end = " ")
+        print()
+
+
+ 
+def isSafe(board, row, col):
+    for i in range(col):
+        if board[row][i] == 1:
+            return False
+ 
+    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
+        if board[i][j] == 1:
+            return False
+ 
+    for i, j in zip(range(row, N, 1), range(col, -1, -1)):
+        if board[i][j] == 1:
+            return False
+    return True
+ 
+def solveNQUtil(board, col):
+    if col >= N:
+        return True
+    for i in range(N):
+         if isSafe(board, i, col):
+            board[i][col] = 1
+            if solveNQUtil(board, col + 1) == True:
+                return True
+            board[i][col] = 0
+    return False
+ 
+def solveNQ():
+    board = [ [0, 0, 0, 0, 0, 0 ,0, 0],
+              [0, 0, 0, 0, 0, 0 ,0, 0],
+              [0, 0, 0, 0, 0, 0 ,0, 0],
+              [0, 0, 0, 0, 0, 0 ,0, 0],
+              [0, 0, 0, 0, 0, 0 ,0, 0],
+              [0, 0, 0, 0, 0, 0 ,0, 0],
+              [0, 0, 0, 0, 0, 0 ,0, 0],
+              [0, 0, 0, 0, 0, 0 ,0, 0] ]
+    if solveNQUtil(board, 0) == False:
+        print ("Solution does not exist")
+        return False
+    printSolution(board)
+    return True
+    
+solveNQ()
+
+##
+We are given a list of n numbers and a number x, the task is to write a python program to find out all possible subsets of the list such that their sum is x.
+# Write your code here
+
+from itertools import combinations
+def subsetSum(n, arr, x):
+    for i in range(n):
+        for subset in combinations(arr,i):
+            if sum(subset)==x:
+                print(list(subset))
+
+
+
+
+n=int(input())
+arr=[]
+for i in range(0,n):
+    a=int(input())
+    arr.append(a)
+x = int(input())
+
+subsetSum(n, arr, x)
+
+##
+Given a set of positive integers, and a value sum, determine that the sum of the subset of a given set is equal to the given sum.
+def SubsetSum(a,i,sum,target,n):
+    if i==n:
+        return sum==target
+    if sum>target:
+        return False
+    if sum==target:
+        return True
+    return SubsetSum(a,i+1,sum,target,n) or SubsetSum(a,i+1,sum+a[i],target,n)
+
+# Write your code here
+
+
+
+
+
+
+
+
+a=[]
+size=int(input())
+for i in range(size):
+    x=int(input())
+    a.append(x)
+
+target=int(input())
+n=len(a)
+if(SubsetSum(a,0,0,target,n)==True):
+    for i in range(size):
+        print(a[i])
+    print("True,subset found")
+else:
+    for i in range(size):
+        print(a[i])
+    print("False,subset not found")
+
+##
+Given an array arr[] of length N and an integer X, the task is to find the number of subsets with a sum equal to X.
+def subsetSum(arr, n, i,sum, count):
+    if (n==i):
+        if (sum==0):
+            count+=1
+        return count
+    count=subsetSum(arr, n, i+1,sum, count)
+    count=subsetSum(arr, n, i+1,sum-arr[i], count)
+    return count
+
+
+
+arr=[]
+size=int(input())
+for j in range(size):
+    value=int(input())
+    arr.append(value)
+sum = int(input())
+n = len(arr)
+ 
+print(subsetSum(arr, n, 0, sum, 0))
+
+##
+Given a set of positive integers, and a value sum, determine that the sum of the subset of a given set is equal to the given sum.
+def SubsetSum(a,i,sum,target,n):
+    if i==n:
+        return sum==target
+    if sum==target:
+        return False
+    if sum>target:
+        return True
+    return SubsetSum(a,i+1,sum,target,n) or SubsetSum(a,i+1,sum+a[i],target,n) 
+        
+
+
+
+
+
+
+
+
+a=[]
+size=int(input())
+for i in range(size):
+    x=int(input())
+    a.append(x)
+
+target=int(input())
+n=len(a)
+if(SubsetSum(a,0,0,target,n)==True):
+    for i in range(size):
+        print(a[i])
+    print("True,subset found")
+else:
+    for i in range(size):
+        print(a[i])
+    print("False,subset not found")
+
+##
+Given an undirected graph and a number m, determine if the graph can be coloured with at most m colours such that no two adjacent vertices of the graph are colored with the same color. Here coloring of a graph means the assignment of colors to all vertices.
+class Graph():
+    def __init__(self, vertices):
+        self.V = vertices
+        self.graph = [[0 for column in range(vertices)]for row in range(vertices)]
+ 
+    def isSafe(self, v, colour, c):
+        for i in range(self.V):
+            if self.graph[v][i] == 1 and colour[i] == c:
+                return False
+        return True
+
+    def graphColourUtil(self, m, colour, v):
+        if v == self.V:
+            return True
+        for c in range(1, m + 1):
+            if self.isSafe(v, colour, c) == True:
+                colour[v] = c
+                if self.graphColourUtil(m, colour, v + 1) == True:
+                    return True
+                colour[v] = 0
+
+    def graphColouring(self, m):
+        colour = [0] * self.V
+        if self.graphColourUtil(m, colour, 0) == None:
+            return False
+        print ("Solution exist and Following are the assigned colours:")
+        for c in colour:
+            print (c,end=' ')
+        return True
+
+##
+SUBSET SUM PROBLEM
+def subsetSum(arr, n, i,sum, count):
+    if (n==i):
+        if (sum==0):
+            count+=1
+        return count
+    count=subsetSum(arr, n, i+1,sum, count)
+    count=subsetSum(arr, n, i+1,sum-arr[i], count)
+    return count
+
+
+
+arr=[]
+size=int(input())
+for j in range(size):
+    value=int(input())
+    arr.append(value)
+sum = int(input())
+n = len(arr)
+ 
+print(subsetSum(arr, n, 0, sum, 0))
+##

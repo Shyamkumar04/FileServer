@@ -1,0 +1,357 @@
+To Write a Python Program to find longest common subsequence using Dynamic Programming
+def lcs(str1, str2):
+    m, n = len(str1), len(str2)
+    table = [[0] * (n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            if str1[i-1] == str2[j-1]:
+                table[i][j] = 1 + table[i-1][j-1]
+            else:
+                table[i][j] = max(table[i-1][j], table[i][j-1])
+    lcs = ""
+    i, j = m, n
+    while i > 0 and j > 0:
+        if str1[i-1] == str2[j-1]:
+            lcs = str1[i-1] + lcs
+            i -= 1
+            j -= 1
+        elif table[i-1][j] > table[i][j-1]:
+            i -= 1
+        else:
+            j -= 1
+    return lcs
+str1=input()
+str2=input()
+print(lcs(str1,str2))
+##
+Write a Python Program to find longest common subsequence using Dynamic Programming
+def lcs(str1, str2):
+    m, n = len(str1), len(str2)
+    table = [[0] * (n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            if str1[i-1] == str2[j-1]:
+                table[i][j] = 1 + table[i-1][j-1]
+            else:
+                table[i][j] = max(table[i-1][j], table[i][j-1])
+    lcs = ""
+    i, j = m, n
+    while i > 0 and j > 0:
+        if str1[i-1] == str2[j-1]:
+            lcs = str1[i-1] + lcs
+            i -= 1
+            j -= 1
+        elif table[i-1][j] > table[i][j-1]:
+            i -= 1
+        else:
+            j -= 1
+            
+    print("Length of LCS is :",len(lcs))
+str1=input()
+str2=input()
+lcs(str1,str2)
+##
+Create a python program to find the length of longest common subsequence using naive recursive method
+def lcs(str1, str2):
+    m, n = len(str1), len(str2)
+    table = [[0] * (n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            if str1[i-1] == str2[j-1]:
+                table[i][j] = 1 + table[i-1][j-1]
+            else:
+                table[i][j] = max(table[i-1][j], table[i][j-1])
+    lcs = ""
+    i, j = m, n
+    while i > 0 and j > 0:
+        if str1[i-1] == str2[j-1]:
+            lcs = str1[i-1] + lcs
+            i -= 1
+            j -= 1
+        elif table[i-1][j] > table[i][j-1]:
+            i -= 1
+        else:
+            j -= 1
+    return lcs
+str1=input()
+str2=input()
+print("Length of LCS is ",len(lcs(str1,str2)))
+
+##
+Create a python program to find the longest common subsequence using Memoization Implementation.
+def lcs(str1, str2):
+    m, n = len(str1), len(str2)
+    table = [[0] * (n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            if str1[i-1] == str2[j-1]:
+                table[i][j] = 1 + table[i-1][j-1]
+            else:
+                table[i][j] = max(table[i-1][j], table[i][j-1])
+    lcs = ""
+    i, j = m, n
+    while i > 0 and j > 0:
+        if str1[i-1] == str2[j-1]:
+            lcs = str1[i-1] + lcs
+            i -= 1
+            j -= 1
+        elif table[i-1][j] > table[i][j-1]:
+            i -= 1
+        else:
+            j -= 1
+    return lcs
+str1=input()
+str2=input()
+print("Length of LCS is",len(lcs(str1,str2)))
+
+##
+The longest common substring problem is the problem of finding the longest string (or strings) that is a substring (or are substrings) of two strings.
+def lcs(str1, str2):
+    m, n = len(str1), len(str2)
+    table = [[0] * (n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            if str1[i-1] == str2[j-1]:
+                table[i][j] = 1 + table[i-1][j-1]
+            else:
+                table[i][j] = max(table[i-1][j], table[i][j-1])
+    lcs = ""
+    i, j = m, n
+    while i > 0 and j > 0:
+        if str1[i-1] == str2[j-1]:
+            lcs = str1[i-1] + lcs
+            i -= 1
+            j -= 1
+        elif table[i-1][j] > table[i][j-1]:
+            i -= 1
+        else:
+            j -= 1
+    return lcs
+str1=input()
+str2=input()
+print("The longest common substring is",(lcs(str1,str2)))
+
+##
+Given two strings ‘X’ and ‘Y’, find the length of the longest common substring. 
+def lcs(str1, str2):
+    m, n = len(str1), len(str2)
+    table = [[0] * (n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            if str1[i-1] == str2[j-1]:
+                table[i][j] = 1 + table[i-1][j-1]
+            else:
+                table[i][j] = max(table[i-1][j], table[i][j-1])
+    lcs = ""
+    i, j = m, n
+    while i > 0 and j > 0:
+        if str1[i-1] == str2[j-1]:
+            lcs = str1[i-1] + lcs
+            i -= 1
+            j -= 1
+        elif table[i-1][j] > table[i][j-1]:
+            i -= 1
+        else:
+            j -= 1
+    return lcs
+str1=input()
+str2=input()
+print("Length of Longest Common Substring is",len(lcs(str1,str2)))
+
+##
+Create a Python program to find longest common substring or subword (LCW) of two strings using dynamic programming with bottom-up approach.
+def lcw(u, v):
+    m, n = len(u), len(v)
+    table = [[0] * (n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            if u[i-1] == v[j-1]:
+                table[i][j] = 1 + table[i-1][j-1]
+            else:
+                table[i][j] = max(table[i-1][j], table[i][j-1])
+    lcw = ""
+    i, j = m, n
+    while i > 0 and j > 0:
+        if u[i-1] == v[j-1]:
+            lcw = u[i-1] + lcw
+            i -= 1
+            j -= 1
+        elif table[i][j] >= table[i][j]:
+            i -= 1
+        else:
+            j -= 1
+    return lcw
+u=input()
+v=input()
+print("Longest Common Subword:",lcw(u,v))
+
+##
+Create a  Python program to find longest common substring or subword (LCW) of two strings using dynamic programming with top-down approach or memoization.
+def lcw(u, v):
+    m, n = len(u), len(v)
+    table = [[0] * (n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            if u[i-1] == v[j-1]:
+                table[i][j] = 1 + table[i-1][j-1]
+            else:
+                table[i][j] = max(table[i-1][j], table[i][j-1])
+    lcw = ""
+    i, j = m, n
+    while i > 0 and j > 0:
+        if u[i-1] == v[j-1]:
+            lcw = u[i-1] + lcw
+            i -= 1
+            j -= 1
+        elif table[i][j] >= table[i][j]:
+            i -= 1
+        else:
+            j -= 1
+    return lcw
+u=input()
+v=input()
+print("Longest Common Subword:",lcw(u,v))
+
+##
+Given a sequence, find the length of the longest palindromic subsequence in it.
+dp = [[-1 for i in range(1001)]for j in range(1001)]
+def lps(s1, s2, n1, n2):
+    if (n1 == 0 or n2 == 0):
+        return 0
+    if (dp[n1][n2] != -1):
+        return dp[n1][n2]
+    if (s1[n1 - 1] == s2[n2 - 1]):
+        dp[n1][n2] = 1 + lps(s1, s2, n1 - 1, n2 - 1)
+        return dp[n1][n2]
+    else:
+        dp[n1][n2] = max(lps(s1, s2, n1 - 1, n2), lps(s1, s2, n1, n2 - 1))
+        return dp[n1][n2]
+seq = input()
+n = len(seq)
+s2 = seq
+s2 = s2[::-1]
+print("The length of the LPS is",lps(s2, seq, n, n))
+
+##
+Given a string s, return the longest palindromic substring in s.
+class Solution(object):
+   def longestPalindrome(self, s):
+      ###########  Add your code here #############
+      dp = [[False for i in range(len(s))] for i in range(len(s))]
+      for i in range(len(s)):
+         dp[i][i] = True
+      max_length = 1
+      start = 0
+      for l in range(2,len(s)+1):
+         for i in range(len(s)-l+1):
+            end = i+l
+            if l==2:
+               if s[i] == s[end-1]:
+                  dp[i][end-1]=True
+                  max_length = l
+                  start = i
+            else:
+               if s[i] == s[end-1] and dp[i+1][end-2]:
+                  dp[i][end-1]=True
+                  max_length = l
+                  start = i
+      return s[start:start+max_length]
+ob1 = Solution()
+str1=input()
+print(ob1.longestPalindrome(str1))
+
+##
+Create a python program to find the longest palindromic substring using Brute force method in a given string.
+def printSubStr(str, low, high):
+	for i in range(low, high + 1):
+		print(str[i], end = "")
+def longestPalindrome(str):
+	n = len(str)
+	maxLength = 1
+	start = 0
+	for i in range(n):
+		for j in range(i, n):
+			flag = 1
+			for k in range(0, ((j - i) // 2) + 1):
+				if (str[i + k] != str[j - k]):
+					flag = 0
+			if (flag != 0 and (j - i + 1) > maxLength):
+				start = i
+				maxLength = j - i + 1
+	printSubStr(str, start, start + maxLength - 1)
+	
+str = input()
+longestPalindrome(str)
+
+##
+Create a python program to find the longest palindromic substring using optimal algorithm Expand around center.
+def printSubStr(s, low, high):
+	for i in range(low, high + 1):
+		print(s[i], end = "")
+def findLongestPalindromicSubstring(s):
+	n = len(s)
+	maxLength = 1
+	start = 0
+	for i in range(n):
+		for j in range(i, n):
+			flag = 1
+			for k in range(0, ((j - i) // 2) + 1):
+				if (s[i + k] != s[j - k]):
+					flag = 0
+			if (flag != 0 and (j - i + 1) > maxLength):
+				start = i
+				maxLength = j - i + 1
+	printSubStr(s, start, start + maxLength - 1)
+	
+s = input()
+
+##
+Create a Naive recursive python program to find the minimum number of operations to convert str1 to str2
+def LD(s, t):
+    if s == "":
+        return len(t)
+    if t == "":
+        return len(s)
+    if s[-1] == t[-1]:
+        cost = 0
+    else:
+        cost = 1
+    res = min([LD(s[:-1], t)+1, LD(s, t[:-1])+1, LD(s[:-1], t[:-1]) + cost])
+    return res
+str1=input()
+str2=input()
+print('Edit Distance',LD(str1,str2))
+
+##
+Create a python program to find the Edit distance between two strings using dynamic programming.
+def LD(s, t):
+    if s == "":
+        return len(t)
+    if t == "":
+        return len(s)
+    if s[-1] == t[-1]:
+        cost = 0
+    else:
+        cost = 1
+    res = min([LD(s[:-1], t)+1, LD(s, t[:-1])+1, LD(s[:-1], t[:-1]) + cost])
+    return res
+str1=input()
+str2=input()
+print("No. of Operations required :",LD(str1,str2))
+
+##
+Create a python program to compute the edit distance between two given strings using iterative method.
+def LD(s, t):
+    if s == "":
+        return len(t)
+    if t == "":
+        return len(s)
+    if s[-1] == t[-1]:
+        cost = 0
+    else:
+        cost = 1
+    res = min([LD(s[:-1], t)+1, LD(s, t[:-1])+1, LD(s[:-1], t[:-1]) + cost])
+    return res
+str1=input()
+str2=input()
+print(LD(str1,str2))

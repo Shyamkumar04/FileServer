@@ -1,0 +1,253 @@
+You are given a rows x cols matrix grid representing a field of cherries where grid[i][j] represents the number of cherries that you can collect from the (i, j) cell.
+class Solution(object):
+    def cherryPickup(self, grid):
+        def dp(k):
+            #########  Add your code here ##########
+            #Start here
+            if k == ROW_NUM - 1:
+                return [[grid[-1][i] if i == j else grid[-1][i] + grid[-1][j] for j in range(COL_NUM)]
+                        for i in range(COL_NUM)]
+            row = grid[k]
+            ans = [[0] * COL_NUM for i in range(COL_NUM)]
+            next_dp = dp(k + 1)
+            for i in range(COL_NUM):
+                for j in range(i, COL_NUM):
+                    for di in [-1, 0, 1]:
+                        for dj in [-1, 0, 1]:
+                            if 0 <= i + di < COL_NUM and 0 <= j + dj < COL_NUM:
+                                if i == j:
+                                    ans[i][j] = max(ans[i][j], next_dp[i + di][j + dj] + row[i])
+                                else:
+                                    ans[i][j] = max(ans[i][j], next_dp[i + di][j + dj] + row[i] + row[j])
+            return ans
+            #End here
+        ROW_NUM = len(grid)
+        COL_NUM = len(grid[0])
+        return dp(0)[0][COL_NUM - 1]
+        
+grid=[[3,1,1],
+      [2,5,1],
+      [1,5,5],
+      [2,1,1]]
+ob=Solution()
+print(ob.cherryPickup(grid))
+
+##
+You are given an n x n grid representing a field of cherries, each cell is one of three possible integers.
+class Solution:
+    def cherryPickup(self, grid):
+        n = len(grid)
+        #############    Add your code here  ############### 
+        #Start here
+        dp = [[-1] * (n + 1) for _ in range(n + 1)]
+        dp[1][1] = grid[0][0]
+        for m in range(1, (n << 1) - 1):
+            for i in range(min(m, n - 1), max(-1, m - n), -1):
+                for p in range(i, max(-1, m - n), -1):
+                    j, q = m - i, m - p
+                    if grid[i][j] == -1 or grid[p][q] == -1:
+                        dp[i + 1][p + 1] = -1
+                    else:
+                        dp[i + 1][p + 1] = max(dp[i + 1][p + 1], dp[i][p + 1], dp[i + 1][p], dp[i][p])
+                        if dp[i + 1][p + 1] != -1: dp[i + 1][p + 1] += grid[i][j] + (grid[p][q] if i != p else 0)
+        return max(0, dp[-1][-1])
+        n,m=len(grid),len(grid[0])
+        dp = [[[-1 for i in range(m)] for j1 in range(n)] for j2 in range(n)]
+        #End here
+        return f(0,0,m-1,dp)
+obj=Solution()
+grid=[[0,1,-1],[1,0,-1],[1,1,1]]        
+print(obj.cherryPickup(grid))
+
+##
+Create a python program for 0/1 knapsack problem using naive recursion method
+def knapSack(W, wt, val, n):
+    ############### Add your code here ##############
+    #Start here
+	if n == 0 or W == 0 :
+		return 0
+	if (wt[n-1] > W):
+		return knapSack(W, wt, val, n-1)
+	else:
+		return max(val[n-1] + knapSack(W-wt[n-1], wt, val, n-1), knapSack(W, wt, val, n-1))
+	#End here
+x=int(input())
+y=int(input())
+W=int(input())
+val=[]
+wt=[]
+for i in range(x):
+    val.append(int(input()))
+for y in range(y):
+    wt.append(int(input()))
+n = len(val)
+print('The maximum value that can be put in a knapsack of capacity W is: ',knapSack(W, wt, val, n))
+
+##
+Create a python program using dynamic programming for 0/1 knapsack problem.
+def knapSack(W, wt, val, n):
+    ########## Add your code here #########
+    #Start here
+	if n == 0 or W == 0 :
+		return 0
+	if (wt[n-1] > W):
+		return knapSack(W, wt, val, n-1)
+	else:
+		return max(val[n-1] + knapSack(W-wt[n-1], wt, val, n-1), knapSack(W, wt, val, n-1))
+	#End here
+x=int(input())
+y=int(input())
+W=int(input())
+val=[]
+wt=[]
+for i in range(x):
+    val.append(int(input()))
+for y in range(y):
+    wt.append(int(input()))
+
+n = len(val)
+print('The maximum value that can be put in a knapsack of capacity W is: ',knapSack(W, wt, val, n))
+
+##
+Solve Travelling Sales man Problem for the following graph
+from sys import maxsize
+from itertools import permutations
+V = 4
+ 
+
+def travellingSalesmanProblem(graph, s):
+    #Start here
+    vertex = []
+    for i in range(V):
+        if i != s:
+            vertex.append(i)
+    min_path = maxsize
+    next_permutation=permutations(vertex)
+    
+    for i in next_permutation:
+        current_pathweight = 0
+        k = s
+        for j in i:
+            current_pathweight += graph[k][j]
+            k = j
+        current_pathweight += graph[k][s]
+        min_path = min(min_path, current_pathweight)
+        
+    return min_path
+    #End here
+ 
+
+   
+ 
+ 
+
+if __name__ == "__main__":
+    
+ 
+    graph = [[0, 10, 15, 20], [10, 0, 35, 25],
+            [15, 35, 0, 30], [20, 25, 30, 0]]
+    s = 0
+    print(travellingSalesmanProblem(graph, s))
+
+##
+Given a 2D matrix tsp[][], where each row has the array of distances from that indexed city to all the other cities and -1 denotes that there doesn’t exist a path between those two indexed cities. The task is to print minimum cost in TSP cycle.
+from typing import DefaultDict
+ 
+ 
+INT_MAX = 2147483647
+ 
+
+def findMinRoute(tsp):
+    sum = 0
+    counter = 0
+    j = 0
+    i = 0
+    min = INT_MAX
+    visitedRouteList = DefaultDict(int)
+ 
+    
+    visitedRouteList[0] = 1
+    route = [0] * len(tsp)
+ 
+    
+    while i < len(tsp) and j < len(tsp[i]):
+        #Start here
+        if counter >= len(tsp[i]) - 1:
+            break
+        if j != i and (visitedRouteList[j] == 0):
+            if tsp[i][j] < min:
+                min = tsp[i][j]
+                route[counter] = j + 1
+        j += 1
+        if j == len(tsp[i]):
+            sum += min
+            min = INT_MAX
+            visitedRouteList[route[counter] - 1] = 1
+            j = 0
+            i = route[counter] - 1
+            counter += 1
+    i = route[counter - 1] - 1
+    #End here
+ 
+
+ 
+    for j in range(len(tsp)):
+ 
+        if (i != j) and tsp[i][j] < min:
+            min = tsp[i][j]
+            route[counter] = j + 1
+ 
+    sum += min
+ 
+    
+    print("Minimum Cost is :", sum)
+ 
+ # Driver Code
+if __name__ == "__main__":
+ 
+  
+    tsp = [[-1, 30, 25, 10], 
+[15, -1, 20, 40], 
+[10, 20, -1, 25], 
+[30, 10, 20, -1]] 
+ 
+    # Function Call
+    findMinRoute(tsp)
+
+##
+Create a python program using brute force method of searching for the given substring in the main string.
+import re #Import this package
+def match(str1,str2):
+    ########### Add your code here #######
+    #Start here
+    pattern = re.compile(str2)
+    r = pattern.search(str1)
+    while r:
+        print("Found at index {}".format(r.start()))
+        r = pattern.search(str1,r.start() + 1)
+    #End here
+str1=input()
+str2=input()
+
+##
+Create a python program to find the maximum value in linear search.
+def find_maximum(lst):
+    #############  Add your code here ##############
+    #Start here
+    max=None
+    for i in lst:
+        if max == None or i > max:
+            max = i
+    return max
+    #End here
+test_scores = []
+n=int(input())
+for i in range(n):
+    test_scores.append(int(input()))
+print("Maximum value is ",find_maximum(test_scores))
+
+
+
+
+
+
