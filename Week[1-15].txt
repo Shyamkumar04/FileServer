@@ -1,0 +1,1196 @@
+qn1
+
+import java.util.Scanner;
+
+public class PalindromeChecker {
+    public static boolean isPalindrome(String s) {
+        s = s.toLowerCase().replaceAll("[^a-z0-9]", "");
+        int i = 0, j = s.length() - 1;
+        while (i < j) {
+            if (s.charAt(i) != s.charAt(j)) {
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        System.out.println(isPalindrome(input));
+        scanner.close();
+    }
+}
+
+
+
+##
+
+5e 
+
+class Solution(object):
+    def isValid(self, s):
+       
+        d = {'(': ')','{': '}','[': ']'}
+        st=[] 
+        for i in s:
+            if i in d.keys():
+                st.append(i)
+            else:
+                if st==[]:
+                    return False
+                else:
+                    if d[st[-1]]==i:
+                        st.pop()
+                    else:
+                        return False
+        if st==[]:
+            return True
+        else:
+            return False
+                    
+##
+
+11e
+
+class Solution(object):
+    def lengthOfLastWord(self, s):
+        l = 0
+        i = len(s) - 1
+
+        while i >= 0 and s[i] == " ":
+            i -= 1 
+
+        while i >= 0 and s[i] != " ":
+            l += 1 
+            i -= 1  
+        return l
+
+##
+
+11m
+
+class Solution(object):
+    def sortColors(self, nums):
+        for i in range(0,len(nums)):
+            for j in range(0,len(nums)-i-1):
+                if nums[j]>nums[j+1]:
+                    nums[j],nums[j+1]=nums[j+1],nums[j]
+    
+        return nums
+
+##
+
+11h
+
+class Solution(object):
+    def candy(self, ratings):
+        """
+        :type ratings: List[int]
+        :rtype: int
+        """
+        n=len(ratings)
+        dp=[1]*n
+        
+        for i in range(1,n):
+            if ratings[i]>ratings[i-1]:
+                dp[i]=dp[i-1]+1
+
+        for i in range(n-2,-1,-1):
+            if ratings[i]>ratings[i+1]:
+                dp[i]=max(dp[i],dp[i+1]+1)
+        
+
+        return sum(dp)
+
+##
+
+12m
+
+class Solution(object):
+    def coinChange(self, coins, amount):
+        """
+        :type coins: List[int]
+        :type amount: int
+        :rtype: int
+        """
+
+        dp=[amount+1]*(amount+1)
+        dp[0]=0
+
+        for i in range(1,amount+1):
+            for c in coins:
+                if i-c>=0:
+                    dp[i]=min(dp[i],dp[i-c]+1)
+        
+        if dp[amount]==amount+1:
+            return -1
+        else:
+            return dp[amount]
+        
+
+##
+
+12h
+
+class Solution(object):
+    def findAllConcatenatedWordsInADict(self, words):
+        """
+        :type words: List[str]
+        :rtype: List[str]
+        """
+        wordset=set(words)
+        dp={}
+        r=[]
+
+        def dfs(w):
+            if w in dp:
+                return dp[w]
+
+            for i in range(1,len(w)):
+                p=w[:i]
+                s=w[i:]
+
+                if (p in wordset and s in wordset) or (p in wordset and dfs(s)):
+                    dp[w]= True
+                    return dp[w]
+
+            dp[w]=False
+            return dp[w]
+
+
+        for w in words:
+            if w == "":
+                continue
+            wordset.remove(w)     
+            if dfs(w):
+                r.append(w)
+            wordset.add(w)  
+
+        return r
+
+##
+
+13m
+
+class Solution(object):
+    def rotate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        n=len(nums)
+        k%=n
+
+        def r(nums,s,e):
+            while s<e:
+                nums[s],nums[e]=nums[e],nums[s]
+                s+=1
+                e-=1
+        
+        r(nums,0,n-1)
+
+        r(nums,0,k-1)
+
+        r(nums,k,n-1)
+
+        return nums
+
+##
+
+13h
+
+class Solution(object):
+    def isNumber(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        s = s.strip()
+        if not s:
+            return False
+
+        num_seen = False
+        dot_seen = False
+        e_seen = False
+        num_after_e = True  # assume true initially for non-'e' strings
+
+        for i in range(len(s)):
+            if s[i].isdigit():
+                num_seen = True
+                if e_seen:
+                    num_after_e = True
+            elif s[i] in ['+', '-']:
+                if i != 0 and s[i-1] not in ['e', 'E']:
+                    return False
+            elif s[i] == '.':
+                if dot_seen or e_seen:
+                    return False
+                dot_seen = True
+            elif s[i] in ['e', 'E']:
+                if e_seen or not num_seen:
+                    return False
+                e_seen = True
+                num_after_e = False  # reset because we expect digits after e
+            else:
+                return False
+
+        return num_seen and num_after_e
+
+##
+
+14m
+
+class Solution(object):
+    def maxProduct(self, nums):
+        if not nums:
+            return 0
+        if len(nums)==1:
+            return nums[0]
+        n=len(nums)
+        m=float('-inf')
+        pref=1
+        suff=1
+        for i in range(n):
+            if pref==0:
+                pref=1
+            if suff==0:
+                suff=1
+            pref=pref*nums[i]
+            suff=suff*nums[n-i-1]
+            m=max(m,max(pref,suff))
+
+        return m
+
+##
+
+14h
+
+class Solution(object):
+    def longestValidParentheses(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        st=[-1]
+        n=len(s)
+        ml=0
+
+        for i in range(n):
+            if s[i]=="(":
+                st.append(i)
+            else:
+                st.pop()
+
+                if not st:
+                    st.append(i)
+                else:
+                    ml=max(ml,i-st[-1])
+        
+        return ml
+
+##
+
+15m
+
+class Solution(object):
+    def longestCommonSubsequence(self, text1, text2):
+        """
+        :type text1: str
+        :type text2: str
+        :rtype: int
+        """
+        
+        n=len(text1)
+        m=len(text2)
+
+        dp=[[0]*(m+1) for i in range(n+1)]
+
+        for i in range(1,n+1):
+            for j in range(1,m+1):
+                if text1[i-1]==text2[j-1]:
+                    dp[i][j]=1+dp[i-1][j-1]
+                else:
+                    dp[i][j]=max(dp[i][j-1],dp[i-1][j])
+        
+        return dp[n][m]
+
+
+##
+
+15h
+
+class Solution(object):
+    def numDistinct(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: int
+        """
+        dp={}
+
+        def dfs(i,j):
+            if j==len(t):
+                return 1
+            if i==len(s):
+                return 0
+            if (i,j) in dp:
+                return dp[(i,j)]
+            
+            if s[i]==t[j]:
+                dp[(i,j)] = dfs(i+1,j+1) + dfs(i+1,j)
+            else:
+                dp[(i,j)] = dfs(i+1,j)
+            
+            return dp[(i, j)]
+        
+        return dfs(0,0)
+        
+##
+
+1e 
+
+class Solution(object):
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        
+        res=0
+        for i in nums:
+            res=i^res
+        return res
+
+##
+
+1m 
+
+class Solution(object):
+    def divide(self, dividend, divisor):
+        """
+        :type dividend: int
+        :type divisor: int
+        :rtype: int
+        """
+        INT_MAX = 2**31 - 1
+        INT_MIN = -2**31
+
+        # Handle overflow
+        if dividend == INT_MIN and divisor == -1:
+            return INT_MAX
+
+        # Determine the sign
+        negative = (dividend < 0) != (divisor < 0)
+
+        # Work with positive values
+        dividend, divisor = abs(dividend), abs(divisor)
+
+        quotient = 0
+        while dividend >= divisor:
+            dividend -= divisor
+            quotient += 1
+
+        return -quotient if negative else quotient
+
+##
+
+1h 
+
+class Solution(object):
+    def trap(self, height):
+        n = len(height)
+        left = 0
+        right = n-1
+        res = 0
+        maxLeft = 0
+        maxRight = 0
+        while left <= right:
+            if height[left] <= height[right]:
+                if height[left] >= maxLeft:
+                    maxLeft = height[left]
+                else:
+                    res += maxLeft - height[left]
+                left += 1
+            else:
+                if height[right] >= maxRight:
+                    maxRight = height[right]
+                else:
+                    res += maxRight - height[right]
+                right -= 1
+        return res
+
+
+##
+
+2e 
+
+class Solution(object):
+    def majorityElement(self, nums):
+        l=sorted(nums)
+        n=len(l)/2
+        k=l[n]
+        return k
+
+##
+
+2m
+
+class Solution(object):
+    def countNumbersWithUniqueDigits(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        
+        if n==0:
+            return 1
+        
+        tot=10
+        p=9
+        cc=9
+        
+        for i in range(2,n+1):
+            p=p*cc
+            tot=tot+p
+            cc=cc-1
+        
+        return tot
+
+##
+
+2h 
+
+class Solution(object):
+    def findMin(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        
+        left, right = 0, len(nums) - 1
+    
+        while left < right:
+            mid = (left + right) // 2
+        
+            if nums[mid] > nums[right]:  
+                left = mid + 1
+            elif nums[mid] < nums[right]:  
+                right = mid
+            else: 
+                right -= 1  
+    
+        return nums[left]
+
+##
+
+3e 
+
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        l=0
+        r=len(s)-1
+
+        while l<r:
+            while l<r and not s[l].isalnum():
+                l+=1
+            while l<r and not s[r].isalnum():
+                r-=1
+            
+            if s[l].lower() != s[r].lower():
+                return False
+            
+            l+=1
+            r-=1
+            
+        return True
+
+##
+
+3m
+
+class Solution(object):
+    def myPow(self, x, n):
+        y=x**n
+        return y
+
+
+##
+
+3h 
+
+class Solution(object):
+    def nearestPalindromic(self, n):
+        """
+        :type n: str
+        :rtype: str
+        """
+        num=int(n)
+
+        def p(i):
+            return str(i)==str(i)[::-1]
+
+        l=num-1
+        u=num+1
+
+        while not p(l):
+            l-=1
+
+        while not p(u):
+            u+=1
+        
+        if num-l<=u-num:
+            return str(l)
+        else:
+            return str(u)
+
+##
+
+4e
+
+class Solution(object):
+    def isPerfectSquare(self, num):
+        """
+        :type num: int
+        :rtype: bool
+        """
+        
+        if num<2:
+            return True
+
+        l=2
+        r=num//2
+
+        while l<=r:
+            m=(l+r)//2
+            s=m*m
+
+            if s==num:
+                return True
+            elif s>num:
+                r=m-1
+            else:
+                l=m+1
+        
+        return False
+
+
+##
+
+4m
+
+class Solution(object):
+    def longestMountain(self, arr):
+        """
+        :type arr: List[int]
+        :rtype: int
+        """
+
+        n=len(arr)
+        ml=0
+
+        for i in range(1,n-1):
+            if arr[i-1]<arr[i]>arr[i+1]:
+                l=i-1
+                r=i+1
+
+                while l>0 and arr[l-1]<arr[l]:
+                    l-=1
+            
+                while r<n-1 and arr[r+1]<arr[r]:
+                    r+=1
+
+                ml=max(ml,r-l+1)
+        
+        return ml
+        
+
+##
+
+4h
+
+class Solution(object):
+    def firstMissingPositive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        
+        num_set = set(nums)  
+    
+        for i in range(1, len(nums) + 2):
+            if i not in num_set:
+                return i
+
+##
+
+5m
+
+class Solution(object):
+    def searchRange(self, nums, target):
+        def findFirst(nums, target):
+            left, right = 0, len(nums) - 1
+            first = -1
+            while left <= right:
+                mid = (left + right) // 2
+                if nums[mid] == target:
+                    first = mid
+                    right = mid - 1 
+                elif nums[mid] < target:
+                    left = mid + 1
+                else:
+                    right = mid - 1
+            return first
+
+        def findLast(nums, target):
+            left, right = 0, len(nums) - 1
+            last = -1
+            while left <= right:
+                mid = (left + right) // 2
+                if nums[mid] == target:
+                    last = mid
+                    left = mid + 1 
+                elif nums[mid] < target:
+                    left = mid + 1
+                else:
+                    right = mid - 1
+            return last
+
+        return [findFirst(nums, target), findLast(nums, target)]
+
+
+##
+
+5h 
+
+class Solution(object):
+    def largestRectangleArea(self, heights):
+        """
+        :type heights: List[int]
+        :rtype: int
+        """
+        
+        heights=[0] + heights +[0]
+        area=0
+        s=[]
+
+        for i in range(len(heights)):
+
+            while s and heights[i]<heights[s[-1]]:
+
+                h=heights[s.pop()]
+                w=i-s[-1]-1
+                area=max(area,h*w)
+            
+            s.append(i)
+        
+        return area
+
+
+##
+
+6e
+
+class Solution(object):
+    def findKthPositive(self, arr, k):
+        l=0
+        r=len(arr)-1
+        while l<=r:
+            m=(l+r)//2
+            mis =arr[m]-m-1
+            if mis <k:
+                l=m+1
+            else:
+                r=m-1
+        return l+k
+
+
+##
+
+6m
+
+class Solution(object):
+    def minRemoveToMakeValid(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+
+        sl=list(s)
+        st=[]
+
+        for i in range(len(sl)):
+            if sl[i]=='(':
+                st.append(i)
+            elif sl[i]==')':
+                if st:
+                    st.pop()
+                else:
+                    sl[i]=''
+        
+        while st:
+            sl[st.pop()]=''
+        
+        return ''.join(sl)
+
+##
+
+6h
+
+class Solution(object):
+    def calculate(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        stack = []
+        result = 0
+        number = 0
+        sign = 1  # 1 means positive, -1 means negative
+
+        for char in s:
+            if char.isdigit():
+                number = number * 10 + int(char)
+            elif char in "+-":
+                result += sign * number
+                number = 0
+                sign = 1 if char == '+' else -1
+            elif char == '(':
+                stack.append(result)
+                stack.append(sign)
+                result = 0
+                sign = 1
+            elif char == ')':
+                result += sign * number
+                number = 0
+                result *= stack.pop()  # sign before '('
+                result += stack.pop()  # result calculated before '('
+        
+        result += sign * number  # for the last number
+        return result
+
+
+##
+
+7e
+
+class Solution(object):
+    def sortedSquares(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+
+        l,r=0,len(nums)-1
+        s=[0]*len(nums)
+
+        for i in range(len(nums)-1,-1,-1):
+
+            if abs(nums[l])>abs(nums[r]):
+                s[i]=nums[l]**2
+                l+=1
+            
+            else:
+                s[i]=nums[r]**2
+                r-=1
+            
+        return s
+
+
+        
+
+##
+
+7m
+
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        l=0
+        c=0
+        n=len(s)
+        d={}
+        for r in range(n):
+            if s[r] in d and d[s[r]]>=l:
+                l=d[s[r]]+1
+            
+            d[s[r]]=r
+            c=max(c,r-l+1)
+        return c
+
+##
+
+7h
+
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        if not prices:
+            return 0
+
+        buy1 = float('-inf')
+        sell1 = 0
+        buy2 = float('-inf')
+        sell2 = 0
+
+        for price in prices:
+            buy1 = max(buy1, -price)           # First buy
+            sell1 = max(sell1, buy1 + price)   # First sell
+            buy2 = max(buy2, sell1 - price)    # Second buy
+            sell2 = max(sell2, buy2 + price)   # Second sell
+
+        return sell2
+
+
+##
+
+8e
+
+class Solution(object):
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        
+        f=1
+        s=2
+
+        if n==1:
+            return f
+
+        if n==2:
+            return s
+
+        t=0
+        for i in range(3,n+1):
+            t=f+s
+            f,s=s,t
+
+        return t
+
+##
+
+8m
+
+class Solution(object):
+    def maxSubArray(self, nums):
+        
+        n=len(nums)
+        cs=nums[0]
+        ms=nums[0]
+
+        for i in range(1,n):
+
+            cs=max(nums[i],nums[i]+cs)
+            ms=max(ms,cs)
+
+        return ms
+
+##
+
+8h
+
+class Solution(object):
+    def maxPoints(self, points):
+        """
+        :type points: List[List[int]]
+        :rtype: int
+        """
+        res=1
+        for i in range(len(points)):
+            p1 = points[i]
+            count=collections.defaultdict(int)
+            for j in range(i + 1, len(points)):
+                p2 = points[j]
+                dx = p2[0] - p1[0]
+                dy = p2[1] - p1[1]
+                
+                if dx == 0:
+                    slope = "inf"  # vertical line
+                elif dy == 0:
+                    slope = "0"    # horizontal line
+                else:
+                    slope = str(float(dy) / dx)
+
+                count[slope] += 1
+                res = max(res, count[slope] + 1)
+        return res
+
+##
+
+9e
+
+class Solution(object):
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+        num = 0
+        for digit in digits:
+            num = num * 10 + digit
+        
+        num += 1
+        n=str(num)
+        
+        result = []
+
+        for digit in n:
+            int_digit = int(digit)
+            result.append(int_digit)
+
+        return result
+
+##
+
+9m
+
+class Solution(object):
+    def countPrimes(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n<2:
+            return 0
+
+        dp=[True]*n
+        dp[0]=dp[1]=False
+
+        i=2
+        while i*i<n:
+            if dp[i]:
+                for j in range(i*i,n,i):
+                    dp[j]=False
+            i+=1
+        
+        return sum(dp)
+
+##
+
+9h
+
+class Solution(object):
+    def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        memo = {}
+
+        def match(i, j):
+            if (i, j) in memo:
+                return memo[(i, j)]
+
+            if i == 0 and j == 0:
+                return True
+
+            if j == 0:
+                return False
+
+            if i == 0:
+                for k in range(0, j, 2):
+                    if k + 1 >= j or p[k + 1] != '*':
+                        memo[(i, j)] = False
+                        return False
+                memo[(i, j)] = True
+                return True
+
+            if p[j - 1] == s[i - 1] or p[j - 1] == '.':
+                memo[(i, j)] = match(i - 1, j - 1)
+            elif p[j - 1] == '*':
+                memo[(i, j)] = match(i, j - 2) or (
+                    i > 0 and (p[j - 2] == s[i - 1] or p[j - 2] == '.') and match(i - 1, j)
+                )
+            else:
+                memo[(i, j)] = False
+
+            return memo[(i, j)]
+
+        return match(len(s), len(p))
+
+
+##
+
+10e
+
+class Solution(object):
+    def isAnagram(self, s, t):
+        if len(s)!=len(t):
+            return False
+
+        freq={}
+    
+        for c in s:
+            if c in freq:
+                freq[c]+=1
+            else:
+                freq[c]=1
+
+        for c in t:
+            if c in freq:
+                freq[c]-=1
+                if freq[c]==0:
+                    del(freq[c])
+            else:
+                return False
+        
+        return len(freq)==0
+
+##
+
+10m
+
+class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        n = len(nums)
+        output = [1] * n
+
+        # Step 1: Left prefix products
+        for i in range(1, n):
+            output[i] = output[i - 1] * nums[i - 1]
+
+        # Step 2: Right suffix products (in-place)
+        suffix = 1
+        for i in range(n - 1, -1, -1):
+            output[i] *= suffix
+            suffix *= nums[i]
+
+        return output
+
+##
+
+10h
+
+class Solution(object):
+    def numberToWords(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        if num == 0:
+            return "Zero"
+
+        below_20 = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+                    "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen",
+                    "Sixteen", "Seventeen", "Eighteen", "Nineteen"]
+
+        tens = ["", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"]
+
+        thousands = ["", "Thousand", "Million", "Billion"]
+
+        def helper(n):
+            if n == 0:
+                return ""
+            elif n < 20:
+                return below_20[n] + " "
+            elif n < 100:
+                return tens[n // 10] + " " + helper(n % 10)
+            else:
+                return below_20[n // 100] + " Hundred " + helper(n % 100)
+
+        res = ""
+        for i, unit in enumerate(thousands):
+            if num % 1000 != 0:
+                res = helper(num % 1000) + unit + " " + res
+            num //= 1000
+
+        return res.strip()
+
+##
+
+12e
+
+class Solution(object):
+    def searchInsert(self, nums, target):
+        l=0
+        r=len(nums)-1
+        while l<=r:
+            m=(l+r)//2
+            if nums[m]==target:
+                return m
+            elif nums[m]<target:
+                l=m+1
+            else:
+                r=m-1
+        return l
+
+##
+
+13e
+
+class Solution(object):
+    def hasMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+
+        pre,suf=p.split("*")
+
+        pre_i=s.find(pre)
+        if pre_i==-1:
+            return False
+        
+        suf_i=s.find(suf,pre_i+len(pre))
+
+        if suf_i==-1:
+            return False
+        else:
+            return True
+
+        
+##
+
+14e
+
+class Solution(object):
+    def findMaxConsecutiveOnes(self, nums):
+        mc=0
+        cc=0
+        for n in nums:
+            if n==1:
+                cc+=1
+                mc=max(cc,mc)
+            else:
+                cc=0
+        return mc
+
+##
+
+15e
+
+class Solution(object):
+    def kidsWithCandies(self, candies, extraCandies):
+        """
+        :type candies: List[int]
+        :type extraCandies: int
+        :rtype: List[bool]
+        """
+        
+        m=max(candies)
+        r=[]
+
+        for c in candies:
+            if c+extraCandies>=m:
+                r.append(True)
+            else:
+                r.append(False)
+
+        return r
